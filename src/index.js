@@ -494,6 +494,58 @@ function main() {
                 });
             }
         }
+        else if (data.type == "REMOVE_ITEM_FROM_PEEPS") {
+            var item = "balloon";
+            if(data.message !== undefined && data.message !== "") {
+                item = data.message;
+            }
+            for (var i = 0; i < map.numEntities; i++) {
+                var entity = map.getEntity(i);
+                if (!entity) {
+                    continue;
+                }
+
+                var entityIsGuest = entity.type === 'peep' && entity.peepType === "guest";
+
+                if (entityIsGuest) {
+                    for(var j = 0; j < entity.items.length; j++) {
+                        if(entity.items[j].type === item) {
+                            entity.removeItem(entity.items[j]);
+                        }
+                    }
+                }
+            }
+
+            if (enabledNotifications) {
+                park.postMessage({
+                    type: "guests",
+                    text: data.username + ": Made guests lose their " + item + "s"
+                });
+            }
+        }
+        else if (data.type == "REMOVE_ALL_ITEMS_FROM_PEEPS") {
+            for (var i = 0; i < map.numEntities; i++) {
+                var entity = map.getEntity(i);
+                if (!entity) {
+                    continue;
+                }
+
+                var entityIsGuest = entity.type === 'peep' && entity.peepType === "guest";
+
+                if (entityIsGuest) {
+                    for(; 0 < entity.items.length;) {//Loop through all the items, but the array gets smaller every time we remove an item.
+                        entity.removeItem(entity.items[0]);//Let's always remove the first item in the list. Let's clear them out!
+                    }
+                }
+            }
+
+            if (enabledNotifications) {
+                park.postMessage({
+                    type: "guests",
+                    text: data.username + ": Made guests lose all their items"
+                });
+            }
+        }
         else if (data.type == "SPAWN_PEEPS") {
             let value = parseIntOrDefault(data.message, 100);
             context.executeAction("cheatset", {
