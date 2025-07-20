@@ -84,6 +84,7 @@ const cheatTypes = {
     "WaterPlants": 24,
     "FixVandalism": 26,
     "RemoveLitter": 27,
+    "RenewRides": 29,
     "FixRides": 31,
     "ForceWeather": 35,
     "SpawnDucks": 46
@@ -684,6 +685,22 @@ function main() {
                 });
             }
         }
+        else if (data.type == "RENEW_RIDES") {
+            context.executeAction("cheatset", {
+                type: cheatTypes.RenewRides,
+                param1: 0,
+                param2: 0
+            }, (result) => {
+                console.log(result);
+            });
+
+            if (enabledNotifications) {
+                park.postMessage({
+                    type: "blank",
+                    text: data.username + ": Refurbished all the rides"
+                });
+            }
+        }
         else if (data.type == "FIX_RIDES") {
             context.executeAction("cheatset", {
                 type: cheatTypes.FixRides,
@@ -771,6 +788,22 @@ function main() {
                 });
             }
         }
+        else if (data.type == "WATER_PLANTS") {
+            context.executeAction("cheatset", {
+                type: cheatTypes.WaterPlants,
+                param1: 0,
+                param2: 0
+            }, (result) => {
+
+            });
+
+            if (enabledNotifications) {
+                park.postMessage({
+                    type: "blank",
+                    text: data.username + ": Watered all the plants"
+                });
+            }
+        }
         else if (data.type == "FORCE_WEATHER") {
             context.executeAction("cheatset", {
                 type: cheatTypes.ForceWeather,
@@ -798,6 +831,22 @@ function main() {
                 park.postMessage({
                     type: "blank",
                     text: data.username + ": Changed the park name to " + data.message
+                });
+            }
+        }
+        else if (data.type == "CLEAR_LOAN") {
+            context.executeAction("cheatset", {
+                type: cheatTypes.ClearLoan,
+                param1: 0,
+                param2: 0
+            }, (result) => {
+
+            });
+
+            if (enabledNotifications) {
+                park.postMessage({
+                    type: "blank",
+                    text: data.username + ": Paid off your loan"
                 });
             }
         }
