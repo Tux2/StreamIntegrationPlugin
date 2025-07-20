@@ -75,9 +75,17 @@ const colorDictionary = {
 };
 
 const cheatTypes = {
+    "AddMoney": 16,
+    "ClearLoan": 18,
     "GenerateGuests": 20,
     "ExplodeGuests": 22,
     "GiveAllGuests": 22,
+    "SetGrassLength": 23,
+    "WaterPlants": 24,
+    "FixVandalism": 26,
+    "RemoveLitter": 27,
+    "FixRides": 31,
+    "ForceWeather": 35,
     "SpawnDucks": 46
 };
 
@@ -661,7 +669,7 @@ function main() {
         }
         else if (data.type == "MOW_GRASS") {
             context.executeAction("cheatset", {
-                type: 23,
+                type: cheatTypes.SetGrassLength,
                 param1: 3,
                 param2: 0,
                 flags: null
@@ -678,7 +686,7 @@ function main() {
         }
         else if (data.type == "FIX_RIDES") {
             context.executeAction("cheatset", {
-                type: 31,
+                type: cheatTypes.FixRides,
                 param1: 0,
                 param2: 0
             }, (result) => {
@@ -733,7 +741,7 @@ function main() {
         }
         else if (data.type == "FIX_VANDALISM") {
             context.executeAction("cheatset", {
-                type: 26,
+                type: cheatTypes.FixVandalism,
                 param1: 0,
                 param2: 0
             }, (result) => {
@@ -749,7 +757,7 @@ function main() {
         }
         else if (data.type == "REMOVE_LITTER") {
             context.executeAction("cheatset", {
-                type: 27,
+                type: cheatTypes.RemoveLitter,
                 param1: 0,
                 param2: 0
             }, (result) => {
@@ -765,7 +773,7 @@ function main() {
         }
         else if (data.type == "FORCE_WEATHER") {
             context.executeAction("cheatset", {
-                type: 35,
+                type: cheatTypes.ForceWeather,
                 param1: parseIntOrDefault(data.message, 0),
                 param2: 0
             }, (result) => {
@@ -800,7 +808,7 @@ function main() {
                 if (value < 0)
                     value = -value;
                 context.executeAction("cheatset", {
-                    type: 16,
+                    type: cheatTypes.AddMoney,
                     param1: value * 10,
                     param2: 0
                 }, (result) => {
@@ -819,7 +827,7 @@ function main() {
                 if (value > 0)
                     value = -value;
                 context.executeAction("cheatset", {
-                    type: 16,
+                    type: cheatTypes.AddMoney,
                     param1: value * 10,
                     param2: 0
                 }, (result) => {
